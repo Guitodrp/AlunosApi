@@ -9,7 +9,6 @@ namespace AlunosApi.Controllers;
 [ApiController]
 public class AlunosController(IAlunosRepository repository) : ControllerBase
 {
-
     [HttpGet]
     public IActionResult GetAlunos()
     {
@@ -41,6 +40,10 @@ public class AlunosController(IAlunosRepository repository) : ControllerBase
             idade: request.Idade
             );
 
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
         repository.InsertAluno(aluno);
         return Created("", aluno);
     }
